@@ -75,19 +75,15 @@ def randslap(word, word_eol, userdata):
 	if len (word) <= 1:
 		hexchat.emit_print("Notice", __module_name__, "No arguments given.")
 		return hexchat.EAT_ALL
-	userlist = hexchat.get_list("users")
-	try: line = random.choice(open(textfiledir + "\slaps.txt").readlines())
+	try: line = random.choice(open(textfiledir + "\slaps.txt").readlines()).replace('\n', '').replace('\r', '').replace('%k', word[1])
 	except:
 		hexchat.emit_print("Notice", __module_name__ + " [Plugin]", "Failed to grab a line from slaps.txt (Make sure it's in your config folder!)-- Using default reason if reason was not specified.")
-		line = "slaps \002{}\002 around a bit with a default slap script."
+		line = "slaps %k around a bit with a default slap script.".replace('\n', '').replace('\r', '').replace('%k', word[1])
 	if len (word) == 2:
-		hexchat.command("me " + line.format(word[1]))
+		hexchat.command("me " + line.format(word[0]))
 		return hexchat.EAT_ALL
 	elif len (word) >= 3:
 		hexchat.prnt("One nick at a time.")
-		return hexchat.EAT_ALL
-	else:
-		hexchat.prnt("You slapped nobody.")
 		return hexchat.EAT_ALL
 
 hexchat.hook_command("slap", randslap, help="/slap Slaps a user.")		
