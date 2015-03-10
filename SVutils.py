@@ -71,6 +71,26 @@ def kickquote(word, word_eol, userdata):
 	else: hexchat.emit_print("Notice", __module_name__ + " [Plugin]", "User not found.")
 	return hexchat.EAT_ALL
 
+def randslap(word, word_eol, userdata):
+	if len (word) <= 1:
+		hexchat.emit_print("Notice", __module_name__, "No arguments given.")
+		return hexchat.EAT_ALL
+	userlist = hexchat.get_list("users")
+	try: line = random.choice(open(textfiledir + "\slaps.txt").readlines())
+	except:
+		hexchat.emit_print("Notice", __module_name__ + " [Plugin]", "Failed to grab a line from slaps.txt (Make sure it's in your config folder!)-- Using default reason if reason was not specified.")
+		line = "slaps \002{}\002 around a bit with a default slap script."
+	if len (word) == 2:
+		hexchat.command("me " + line.format(word[1]))
+		return hexchat.EAT_ALL
+	elif len (word) >= 3:
+		hexchat.prnt("One nick at a time.")
+		return hexchat.EAT_ALL
+	else:
+		hexchat.prnt("You slapped nobody.")
+		return hexchat.EAT_ALL
+
+hexchat.hook_command("slap", randslap, help="/slap Slaps a user.")		
 hexchat.hook_command("kick", kickquote, help="/kick Kicks a user.")
 hexchat.hook_command("kickban", kbquote, help="/kickban Kicks and bans a user.")		
 hexchat.hook_command('gt', greentext, help="/gt Shows the desired text in the famous greentext form")
