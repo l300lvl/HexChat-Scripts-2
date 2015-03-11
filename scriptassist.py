@@ -40,7 +40,7 @@ addon_dir = os.path.join(hexchat.get_info('configdir'), 'addons')
 addon_types = ('py', 'pl', 'lua', 'js') # tcl has no way to unload a single script?
 addon_cache = {}
 #               User,       Repo,      Folder
-addon_sites = (('undeadrevo', 'HexChat-Scripts', ''))
+addon_sites = (('undeadrevo', 'HexChat-Scripts', ''), ('ApolloJustice', 'HexChatScripts', ''))
 
 
 def expand_script(script):
@@ -167,5 +167,5 @@ if THREADS_SUPPORTED:
 else:
 	update_addons()
 hexchat.hook_command('script', script_cb, help=script_help)
-hexchat.hook_unload(unload_callback)
-print(__module_name__, 'version', __module_version__, 'loaded.')
+
+hexchat.emit_print('Notice', __module_name__ + ' [Plugin]', '%s by %s loaded. You are using version %s of the script.' % (__module_name__, __module_author__, __module_version__))
