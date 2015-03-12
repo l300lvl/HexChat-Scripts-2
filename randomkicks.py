@@ -36,7 +36,7 @@ def kbquote(word, word_eol, userdata):
 	try: reason = word_eol[2]
 	except: reason = line
 
-	reason = reason.replace('\n', '').replace('\r', '').replace('%k', word[1])
+	reason = reason.replace('\n', '').replace('\r', '').replace('%k', word[1]).replace('%c', chan)
 	hexchat.command("raw kick  " + chan + " " + word[1] + " " + ":" + reason + " [Banned]")
 
 	return hexchat.EAT_ALL
@@ -59,7 +59,7 @@ def kickquote(word, word_eol, userdata):
 	for user in userlist:
 		if user.nick.lower() == word[1].lower(): break
 
-	reason = reason.replace('\n', '').replace('\r', '').replace('%k', word[1])
+	reason = reason.replace('\n', '').replace('\r', '').replace('%k', word[1]).replace('%c', chan)
 	if user.nick.lower() == word[1].lower():
 		hexchat.command("raw kick  " + chan + " " + word[1] + " " + ":" + reason)
 
