@@ -15,13 +15,13 @@ def hexchatv(word, word_eol, userdata):
 		cver = hexchat.get_info('version')
 		hexchat.command("me is running HexChat " + cver)
 		return hexchat.EAT_ALL
-		
+
 def cmsg(word, word_eol, userdata):
 	chanstr = word[1].split(",")
 	for chan in chanstr:
 		hexchat.find_context(channel=chan).command("say " + word_eol[2])
 	return hexchat.EAT_ALL
-	
+
 def cme(word, word_eol, userdata):
 	chanstr = word[1].split(",")
 	for chan in chanstr:
@@ -42,9 +42,9 @@ def find_highlighttab(arg1):
 		return context
 
 def highlight_callback(word, word_eol, user_data):
-	
+
 	word = [(word[i] if len(word) > i else '') for i in range(4)]
-	
+
 	highlight_context = find_highlighttab('hilight')
 	nick = hexchat.get_info("nick")
 	chan = hexchat.get_info('channel')
@@ -53,14 +53,14 @@ def highlight_callback(word, word_eol, user_data):
 	content = word[1]
 	mode = word[2]
 	idtext = word[3]
-	
+
 	if 'RasPi ZNC' in net:
 		net = net.replace('RasPi ZNC', '').replace('(', '').replace(')', '')
 		net = net.lstrip()
-	
+
 	content = re.sub(nick, '\002\00320%s\017' % nick , content, flags=re.IGNORECASE)
 	content = content.lstrip()
-	
+
 	if user_data == 'Channel Msg Hilight':
 		highlight_context.prnt('{0}[\00327{3}\017] [\00323{4}\017] \00326{1}\00322{2}\017 said: \'{5}\''.format(idtext, mode, sendernick, chan, net, content))
 	elif user_data == 'Channel Action Hilight':
@@ -247,13 +247,13 @@ def flagedit(word, word_eol, userdata):
 	if '#' in word[1]: hexchat.command('msg chanserv flags ' + word_eol[1])
 	return hexchat.EAT_ALL
 
-def timey(word, eol, data): 
+def timey(word, eol, data):
 	xchat.command('say It\'s currently: ' + strftime("%I:%M:%S %p", localtime()).lstrip('0'))
 	return xchat.EAT_ALL # kills remaining bits of memory
 
 def wrap(word, word_eol, userdata):
 	fullstr = word_eol[1].split('|')
-	
+
 	title = fullstr[0]
 	artist = fullstr[1]
 	album = fullstr[2]
@@ -264,11 +264,11 @@ def wrap(word, word_eol, userdata):
 	soundchannels = fullstr[7]
 	elapsed = fullstr[8]
 	duration = fullstr[9]
-	
+
 	if duration == "0:0-1":
 		hexchat.command("me np: \00304Playback stopped.\017 [\00325fb2k %s\017]" % fb2kver.replace("foobar2000", '').replace('v', '').lstrip().rstrip())
-		return hexchat.EAT_ALL	
-	
+		return hexchat.EAT_ALL
+
 	hexchat.command("me np:\00306 %s \017by\00307 %s\017 from\00310 %s\017 [\00303%s\017/\00304%s\017] [\00318%s\017|\00322%s\00329kbps\017] [\00325fb2k %s\017]" % (title, artist, album, elapsed, duration, codec, bitrate, fb2kver.replace("foobar2000", '').replace('v', '').lstrip().rstrip()))
 	return hexchat.EAT_ALL
 
@@ -277,7 +277,7 @@ def foo(word, word_eol, userdata):
 		hexchat.command("wp")
 	else:
 		hexchat.command("wp %s" % word_eol[1])
-		
+
 chan = ""
 locked = 0
 def savemebrother():
@@ -298,7 +298,7 @@ def storechan(word, word_eol, userdata):
 	global chan
 	chan = word[3]
 	savemebrother()
-	
+
 
 hexchat.hook_command("cv", hexchatv, help="/cv Posts what version of HexChat you are running.")
 hexchat.hook_command("cmsg", cmsg, help="/cmsg <channels> <text> Messages the listed channels(separated by commas) with the desired text")

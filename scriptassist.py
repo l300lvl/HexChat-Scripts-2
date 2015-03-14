@@ -97,7 +97,7 @@ def download(script, unload):
 				if unload: # Updated
 					# Threading causes odd timing issues, using timer fixes it.
 					hexchat.hook_timer(0, unload_cb, script_file)
-				hexchat.hook_timer(0, load_cb, script_file)			
+				hexchat.hook_timer(0, load_cb, script_file)
 			return
 
 	print('Script: Could not find {}'.format(script))

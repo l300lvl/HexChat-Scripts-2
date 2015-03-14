@@ -15,7 +15,7 @@ def kbquote(word, word_eol, userdata):
 
 	chan = hexchat.get_info("channel")
 	userlist = hexchat.get_list("users")
-	
+
 	try: line = random.choice(kickmsg)
 	except:
 		hexchat.emit_print("Notice", __module_name__ + " [Plugin]", "Failed to grab a line from quotes.txt (Make sure it's in your config folder!), Using default reason if reason was not specified.")
